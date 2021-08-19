@@ -21,13 +21,15 @@ export class NewTopDogContestLeaderboard {
     this.api.getDogs();
 
     this.api.dogs$.subscribe(dogs => {
-      this.dogs = dogs.filter(dog => dog.contest.page === this.contest);
-
-      console.log(this.dogs);
+      this.dogs = dogs.filter((dog: any) => dog?.contest?.page === this.contest);
     })
   }
 
   render() {
+    if(!this.dogs) {
+      return null;
+    }
+
     return <div class="new-top-dog-contest-leaderboard">
       {
         this.dogs?.map(dog => 

@@ -18,12 +18,14 @@ export class NewTopDogContestGoal {
     console.log('component loaded');
     this.api = NewTopDogApi.getInstance();
 
-    this.api.getContests();
+    this.api.getGoals();
 
-    this.api.contests$.subscribe(contestGoals => {
-      console.log(contestGoals);
-      this.contestGoal = contestGoals.filter(contestGoal => contestGoal.contest.page === this.contest)[0];
-      console.log(this.contestGoal);
+    this.api.goals$.subscribe(contestGoals => {
+      const found = contestGoals.filter((contestGoal: any) => contestGoal?.contest?.page === this.contest)
+
+      if(found && found.length > 0){
+        this.contestGoal = found[0];
+      }
     })
   }
 

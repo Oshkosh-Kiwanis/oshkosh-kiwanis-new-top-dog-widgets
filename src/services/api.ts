@@ -1,88 +1,84 @@
-import { ReplaySubject, Subject, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject, timer } from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
+import { catchError, concatMapTo, switchMap } from 'rxjs/operators';
 
 export class NewTopDogApi {
-    private static num_instances = 0;
-    private static instance: NewTopDogApi;
-    socket: WebSocket = null;
+  private static num_instances = 0;
+  private static instance: NewTopDogApi;
+  socket: WebSocket = null;
 
-    contests$ = new Subject<any>();
-    dogs$ = new Subject<any>();
+  goals$: Observable<any> = null;
+  dogs$: Observable<any> = null;
 
-    destroy$ = new Subject<boolean>();
-    messages$ = new ReplaySubject<string>(100);
+  destroy$ = new Subject<boolean>();
 
-    private constructor() {
-        // connect to the websocket api
-        // this.socket = new WebSocket("ws://api.new-top-dog.timios.dev/ws/");
-        this.socket = new WebSocket("ws://35.223.188.100/ws/");
+  private constructor() {}
 
+  static getInstance() {
+    if (!NewTopDogApi.instance) {
+      NewTopDogApi.instance = new NewTopDogApi();
+    }
+    NewTopDogApi.num_instances += 1;
 
-        this.socket.onopen = (_e) => {
-            // subscribe to the message subjects
-            this.messages$.pipe(takeUntil(this.destroy$)).subscribe(message => {
-                this.socket.send(message);
+    return NewTopDogApi.instance;
+  }
+
+  public getDogs() {
+    if(!this.dogs$){
+      this.dogs$ = timer(0, 60 * 1000).pipe(
+        concatMapTo(
+          fromFetch("https://new-top-dog-gateway-cwp94ia4.uc.gateway.dev/v1/contests/dogs").pipe(
+            switchMap(response => {
+              if (response.ok) {
+                // OK return data
+                return response.json();
+              } else {
+                // Server is returning a status requiring the client to try something else.
+                return of({ error: true, message: `Error ${response.status}` });
+              }
+            }),
+            catchError(err => {
+              // Network or other error, handle appropriately
+              console.error(err);
+              return of({ error: true, message: err.message })
             })
-        };
-
-        this.socket.onmessage = (event) => {
-            try {
-                const resp = JSON.parse(event.data);
-
-                switch(resp.response_type) {
-                    case "top-dogs":
-                        this.dogs$.next(resp.data);
-                        break;
-                    case "contest-goals":
-                        this.contests$.next(resp.data);
-                        break;
-                }
-            } catch(e) {
-                console.error('Unable to parse message from server', e);
-            }
-        };
-
-        this.socket.onclose = function(event) {
-            if (!event.wasClean) {
-                // e.g. server process killed or network down
-                // event.code is usually 1006 in this case
-                console.error('[close] Connection died');
-            }
-        };
-
-        this.socket.onerror = function(error) {
-            console.error(error);
-        };
+          )
+        ),
+      )
     }
+  }
 
-    static getInstance(){ 
-        if(!NewTopDogApi.instance) {
-            NewTopDogApi.instance = new NewTopDogApi();
-        }
-        NewTopDogApi.num_instances += 1;
-
-        return NewTopDogApi.instance;
+  public getGoals() {
+    if(!this.goals$){
+      this.goals$ = timer(0, 60 * 1000).pipe(
+        concatMapTo(
+          fromFetch("https://new-top-dog-gateway-cwp94ia4.uc.gateway.dev/v1/contests/goals").pipe(
+            switchMap(response => {
+              if (response.ok) {
+                // OK return data
+                return response.json();
+              } else {
+                // Server is returning a status requiring the client to try something else.
+                return of({ error: true, message: `Error ${response.status}` });
+              }
+            }),
+            catchError(err => {
+              // Network or other error, handle appropriately
+              console.error(err);
+              return of({ error: true, message: err.message })
+            })
+          )
+        ),
+      )
     }
+  }
 
-    public getDogs() {
-        timer(0, 60 * 1000).pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.messages$.next("dogs");
-        })
+  public close() {
+    NewTopDogApi.num_instances -= 1;
+
+    if (NewTopDogApi.num_instances <= 0) {
+      this.destroy$.next(true);
+      this.destroy$.complete();
     }
-
-    public getContests() {
-        timer(0, 60 * 1000).pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.messages$.next("contests");
-        })
-    }
-
-    public close() { 
-        NewTopDogApi.num_instances -= 1;
-
-        if(NewTopDogApi.num_instances <= 0) {
-            this.destroy$.next(true);
-            this.destroy$.complete();
-            this.socket.close();
-        }
-    }
+  }
 }

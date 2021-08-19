@@ -1,4 +1,5 @@
 import { Component, Prop, h, State } from '@stencil/core';
+import { filter } from 'rxjs';
 import { NewTopDogApi } from '../../services/api';
 
 @Component({
@@ -21,17 +22,19 @@ export class NewTopDogContestLeaderboard {
     console.log('component loaded');
     this.api = NewTopDogApi.getInstance();
 
-    this.api.getContests();
+    this.api.getGoals();
 
-    this.api.dogs$.subscribe((dogs: any[]) => {
-      this.raised = dogs.reduce((a, b) => a.raised + b.raised).toFixed(2);
-      this.matchDay = dogs.reduce((a, b) => a.match_day + b.match_day).toFixed(2);
-      this.goal = dogs.reduce((a, b) => a.goal + b.goal).toFixed(2);
+      this.api.goals$.pipe(
+      filter(goals => !!goals)
+    ).subscribe((goals: any[]) => {
+      this.raised = goals.reduce((r, a) => r + a?.raised || 0, 0).toFixed(2);
+      this.matchDay = goals.reduce((r, a) => r + a?.match_day || 0, 0).toFixed(2);
+      this.goal = goals.reduce((r, a) => r + a?.goal || 0, 0).toFixed(2);
     })
   }
 
   render() {
-    if(!this.raised || this.goal) {
+    if(!this.raised || !this.goal) {
         return null;
     }
 
