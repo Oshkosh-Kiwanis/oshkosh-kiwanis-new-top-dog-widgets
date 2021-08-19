@@ -1,0 +1,30 @@
+$brand-orange: #BF4F00;
+
+.new-top-dog-overall-goal-bar {
+  .goals-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    margin-right: 7px;
+    margin-left: 7px;
+  }
+
+  .goals-bar {
+    height: 20px;
+    border: 2px solid $brand-orange;
+    border-radius: 100px;
+    overflow: hidden;
+
+    .goals-bar-raised {
+      height: 100%;
+      background: $brand-orange;
+    }
+  }
+}
+
+
+.new-top-dog-overall-goal-text {
+  font-size: 32px;
+  font-weight: bold;
+}

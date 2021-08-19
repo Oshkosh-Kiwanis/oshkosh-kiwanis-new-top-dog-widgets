@@ -1,0 +1,25 @@
+.new-top-dog-contest-leaderboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  .dog {
+    margin: 2px;
+
+    a {
+      width: 156px;
+      height: 201px;
+      display: block;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+
+      * {
+        font-size: 18px;
+      }
+    }
+  }
+}

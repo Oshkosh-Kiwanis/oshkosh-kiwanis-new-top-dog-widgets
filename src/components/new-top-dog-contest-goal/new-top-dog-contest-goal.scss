@@ -1,0 +1,37 @@
+$brand-orange: #BF4F00;
+
+.new-top-dog-contest-goal {
+  .goals-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    margin-right: 7px;
+    margin-left: 7px;
+
+    .raised {
+      display: flex;
+    }
+  }
+
+  .goals-bar {
+    height: 20px;
+    border: 2px solid $brand-orange;
+    border-radius: 100px;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    .goals-bar-raised-votes {
+      height: 100%;
+      background: $brand-orange;
+    }
+
+    .goals-bar-raised-match-day {
+      height: 100%;
+      background: #f5bc3e;
+    }
+  }
+}

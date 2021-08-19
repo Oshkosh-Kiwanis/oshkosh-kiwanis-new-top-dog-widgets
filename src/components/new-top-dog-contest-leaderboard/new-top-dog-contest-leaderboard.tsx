@@ -3,6 +3,7 @@ import { NewTopDogApi } from '../../services/api';
 
 @Component({
   tag: 'new-top-dog-contest-leaderboard',
+  styleUrl: 'new-top-dog-contest-leaderboard.scss',
 })
 export class NewTopDogContestLeaderboard {
   /*

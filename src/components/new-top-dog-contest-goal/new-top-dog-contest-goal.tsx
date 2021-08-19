@@ -3,6 +3,7 @@ import { NewTopDogApi } from '../../services/api';
 
 @Component({
   tag: 'new-top-dog-contest-goal',
+  styleUrl: 'new-top-dog-contest-goal.scss',
 })
 export class NewTopDogContestGoal {
   /*
@@ -11,8 +12,18 @@ export class NewTopDogContestGoal {
   @Prop() contest: string;
 
   @State() contestGoal: any;
+  @State() votesBarWidth: number;
+  @State() matchDayBarWidth: number;
 
   api: NewTopDogApi;
+  formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
+
+  format(cur: number) {
+    return this.formatter.format(cur);
+  }
 
   componentDidLoad() {
     console.log('component loaded');
@@ -25,6 +36,12 @@ export class NewTopDogContestGoal {
 
       if(found && found.length > 0){
         this.contestGoal = found[0];
+
+        const total = this.contestGoal.raised + this.contestGoal.match_day;
+        const max = Math.max(total, this.contestGoal.goal);
+
+        this.votesBarWidth = this.contestGoal.raised / max * 100;
+        this.matchDayBarWidth = this.contestGoal.match_day / max * 100;
       }
     })
   }
@@ -36,14 +53,15 @@ export class NewTopDogContestGoal {
 
     return <div class="new-top-dog-contest-goal">
         <div class="goals-text">
-            <div>
-                <div class="raised">${ this.contestGoal.raised.toFixed(2) }</div>
-                { !!this.contestGoal.matchDay ? <div class="match-day">+ ${ this.contestGoal.match_day.toFixed(2) }</div> : null }
+            <div class="raised">
+                <div class="votes">{ this.format(this.contestGoal.raised) }</div>
+                { !!this.contestGoal.match_day ? <div class="match-day">&nbsp;+&nbsp;{ this.format(this.contestGoal.match_day) }</div> : null }
             </div> 
-            <div class="raised">${ this.contestGoal.goal.toFixed(2) }</div>
+            <div class="goal">{ this.format(this.contestGoal.goal) }</div>
         </div>
         <div class="goals-bar">
-            <div class="goals-bar-raised" style={{ width: `${this.contestGoal.raised / this.contestGoal.goal * 100}%` }}></div>
+            <div class="goals-bar-raised-votes" style={{ width: `${this.votesBarWidth}%` }}></div>
+            <div class="goals-bar-raised-match-day" style={{ width: `${this.matchDayBarWidth}%` }}></div>
         </div>
     </div>;
   }
