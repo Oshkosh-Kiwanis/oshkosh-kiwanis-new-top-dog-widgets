@@ -22,7 +22,10 @@ export class NewTopDogContestGoal {
   });
 
   format(cur: number) {
-    return this.formatter.format(cur);
+    const curStr = this.formatter.format(cur);
+
+    // chop off the currency from the number!
+    return curStr.substr(0, curStr.length - 3);
   }
 
   componentDidLoad() {
