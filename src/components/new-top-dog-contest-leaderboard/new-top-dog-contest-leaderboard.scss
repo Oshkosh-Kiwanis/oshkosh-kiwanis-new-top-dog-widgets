@@ -21,7 +21,7 @@
     // laptop
     @media screen and (min-width: 1024px) {
       --num-dogs: 5;
-      font-size: unquote('max(22px, 1.5vw)');
+      font-size: unquote('max(15px, 1vw)');
     }
 
     margin: 2px;
@@ -80,6 +80,25 @@
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
+
+      a {
+        color: #FFFFFF!important;
+        border-width: 2px!important;
+        border-color: #BF4F00;
+        border-radius: 100px;
+        font-size: 14px;
+        background-color: #BF4F00;
+
+        font-weight: 500;
+        padding: .3em 1em;
+        line-height: 1.7em!important;
+        background-size: cover;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        border: 2px solid;
+
+        text-decoration: none;
+      }
     }
   }
 }

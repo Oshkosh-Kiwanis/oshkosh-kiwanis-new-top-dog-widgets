@@ -42,7 +42,7 @@ export class NewTopDogContestLeaderboard {
               </div>
             </a>
             <div class="actions">
-              <a class="et_pb_button et_pb_button_2 et_pb_bg_layout_light" href={dog.page} target="_blank">Vote For {dog.dog}</a>
+              <a href={dog.page} target="_blank">Vote For {dog.dog}</a>
             </div>
           </div>
         )
