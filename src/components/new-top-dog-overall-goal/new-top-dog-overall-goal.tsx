@@ -39,13 +39,15 @@ export class NewTopDogContestLeaderboard {
       this.api.goals$.pipe(
       filter(goals => !!goals)
     ).subscribe((goals: any[]) => {
-      this.raised = goals.reduce((r, a) => r + a?.raised || 0, 0).toFixed(2);
-      this.matchDay = goals.reduce((r, a) => r + a?.match_day || 0, 0).toFixed(2);
-      this.goal = goals.reduce((r, a) => r + a?.goal || 0, 0).toFixed(2);
+      this.raised = goals.reduce((r, a) => r + a?.raised || 0, 0);
+      this.matchDay = goals.reduce((r, a) => r + a?.match_day || 0, 0);
+      this.goal = goals.reduce((r, a) => r + a?.goal || 0, 0);
     })
   }
 
   render() {
+    const overall = this.raised + this.matchDay;
+
     if(!this.raised || !this.goal) {
         return null;
     }
@@ -67,7 +69,7 @@ export class NewTopDogContestLeaderboard {
 
     if(this.mode === 'raised') {
         return <div class="new-top-dog-overall-goal-text">
-          { this.format(this.raised + this.matchDay) }
+          { this.format(overall) }
         </div>;
     }
   }
