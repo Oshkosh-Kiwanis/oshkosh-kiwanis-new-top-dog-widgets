@@ -67,7 +67,7 @@ export class NewTopDogContestLeaderboard {
 
     if(this.mode === 'raised') {
         return <div class="new-top-dog-overall-goal-text">
-          { this.format(this.raised) }
+          { this.format(this.raised + this.matchDay) }
         </div>;
     }
   }
