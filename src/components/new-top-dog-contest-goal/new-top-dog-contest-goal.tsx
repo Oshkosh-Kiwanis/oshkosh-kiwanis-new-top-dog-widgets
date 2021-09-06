@@ -57,7 +57,7 @@ export class NewTopDogContestGoal {
     return <div class="new-top-dog-contest-goal">
         <div class="goals-text">
             <div class="raised">
-                { !!this.contestGoal.match_day ? <div class="match-day">&nbsp;+&nbsp;{ this.format(this.contestGoal.match_day) }</div> : null }
+                { !!this.contestGoal.match_day ? <div class="match-day">{ this.format(this.contestGoal.match_day) }&nbsp;+&nbsp;</div> : null }
                 <div class="votes">{ this.format(this.contestGoal.raised) }</div>
             </div>
             <div class="goal">{ this.format(this.contestGoal.goal) }</div>
