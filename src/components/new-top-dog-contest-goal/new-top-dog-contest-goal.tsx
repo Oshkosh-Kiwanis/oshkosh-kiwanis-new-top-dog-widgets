@@ -63,8 +63,8 @@ export class NewTopDogContestGoal {
             <div class="goal">{ this.format(this.contestGoal.goal) }</div>
         </div>
         <div class="goals-bar">
-            <div class="goals-bar-raised-votes" style={{ width: `${this.votesBarWidth}%` }}></div>
             <div class="goals-bar-raised-match-day" style={{ width: `${this.matchDayBarWidth}%` }}></div>
+            <div class="goals-bar-raised-votes" style={{ width: `${this.votesBarWidth}%` }}></div>
         </div>
     </div>;
   }
