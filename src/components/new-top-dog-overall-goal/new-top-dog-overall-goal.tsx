@@ -14,7 +14,6 @@ export class NewTopDogContestLeaderboard {
   @Prop() mode: 'raised' | 'bar' = 'raised'
 
   @State() raised: number;
-  @State() matchDay: number;
   @State() champDay: number;
   @State() goal: number;
   @State() overall: number;
@@ -42,10 +41,8 @@ export class NewTopDogContestLeaderboard {
     ).subscribe((goals: any[]) => {
       this.raised = goals.reduce((r, a) => r + a?.raised || 0, 0);
       this.champDay = goals.reduce((r, a) => r + a?.champ_day || 0, 0);
-      // this.raised = goals.reduce((r, a) => r + a?.raised || 0 , 0);
-      this.matchDay = goals.reduce((r, a) => r + a?.match_day || 0, 0);
       this.goal = goals.reduce((r, a) => r + a?.goal || 0, 0);
-      this.overall = this.raised + this.matchDay + this.champDay;
+      this.overall = this.raised + this.champDay;
     })
   }
 
@@ -59,7 +56,7 @@ export class NewTopDogContestLeaderboard {
             <div class="goals-text">
                 <div>
                   <div class="raised">{ this.format(this.raised) }</div>
-                    { !!this.matchDay ? <div class="match-day">+ { this.format(this.matchDay) }</div> : null }
+                    { !!this.champDay ? <div class="champ-day">+ { this.format(this.champDay) }</div> : null }
                 </div> 
                 <div class="raised">{ this.format(this.goal) }</div>
             </div>
