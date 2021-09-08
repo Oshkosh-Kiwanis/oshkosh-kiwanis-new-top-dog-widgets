@@ -11,6 +11,8 @@ export class NewTopDogContestGoal {
   */
   @Prop() contest: string;
 
+  @State() raised: number;
+  @State() match_day: number;
   @State() contestGoal: any;
   @State() votesBarWidth: number;
   @State() matchDayBarWidth: number;
@@ -40,11 +42,13 @@ export class NewTopDogContestGoal {
       if(found && found.length > 0){
         this.contestGoal = found[0];
 
-        const total = this.contestGoal.raised + this.contestGoal.match_day;
+        this.raised = this.contestGoal.raised + this.contestGoal.champ_day || 0;
+        this.match_day = this.contestGoal.match_day || 0;
+        const total = this.raised + this.match_day || 0 ;
         const max = Math.max(total, this.contestGoal.goal);
 
-        this.votesBarWidth = this.contestGoal.raised / max * 100;
-        this.matchDayBarWidth = this.contestGoal.match_day / max * 100;
+        this.votesBarWidth = this.raised / max * 100;
+        this.matchDayBarWidth = this.match_day / max * 100;
       }
     })
   }
@@ -57,8 +61,8 @@ export class NewTopDogContestGoal {
     return <div class="new-top-dog-contest-goal">
         <div class="goals-text">
             <div class="raised">
-                { !!this.contestGoal.match_day ? <div class="match-day">{ this.format(this.contestGoal.match_day) }&nbsp;+&nbsp;</div> : null }
-                <div class="votes">{ this.format(this.contestGoal.raised) }</div>
+                { !!this.contestGoal.match_day ? <div class="match-day">{ this.format(this.match_day) }&nbsp;+&nbsp;</div> : null }
+                <div class="votes">{ this.format(this.raised) }</div>
             </div>
             <div class="goal">{ this.format(this.contestGoal.goal) }</div>
         </div>

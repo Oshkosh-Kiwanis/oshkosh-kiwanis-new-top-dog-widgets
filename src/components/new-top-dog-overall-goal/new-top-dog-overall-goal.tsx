@@ -15,7 +15,9 @@ export class NewTopDogContestLeaderboard {
 
   @State() raised: number;
   @State() matchDay: number;
+  @State() champDay: number;
   @State() goal: number;
+  @State() overall: number;
 
   formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -35,19 +37,19 @@ export class NewTopDogContestLeaderboard {
     this.api = NewTopDogApi.getInstance();
 
     this.api.getGoals();
-
-      this.api.goals$.pipe(
+    this.api.goals$.pipe(
       filter(goals => !!goals)
     ).subscribe((goals: any[]) => {
       this.raised = goals.reduce((r, a) => r + a?.raised || 0, 0);
+      this.champDay = goals.reduce((r, a) => r + a?.champ_day || 0, 0);
+      // this.raised = goals.reduce((r, a) => r + a?.raised || 0 , 0);
       this.matchDay = goals.reduce((r, a) => r + a?.match_day || 0, 0);
       this.goal = goals.reduce((r, a) => r + a?.goal || 0, 0);
+      this.overall = this.raised + this.matchDay + this.champDay;
     })
   }
 
   render() {
-    const overall = this.raised + this.matchDay;
-
     if(!this.raised || !this.goal) {
         return null;
     }
@@ -69,7 +71,7 @@ export class NewTopDogContestLeaderboard {
 
     if(this.mode === 'raised') {
         return <div class="new-top-dog-overall-goal-text">
-          { this.format(overall) }
+          { this.format(this.overall) }
         </div>;
     }
   }
