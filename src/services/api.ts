@@ -1,6 +1,6 @@
 import { Observable, of, Subject, timer } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { catchError, concatMapTo, switchMap } from 'rxjs/operators';
+import { catchError, concatMapTo, share, switchMap } from 'rxjs/operators';
 
 export class NewTopDogApi {
   private static num_instances = 0;
@@ -44,6 +44,7 @@ export class NewTopDogApi {
             })
           )
         ),
+        share(),
       )
     }
   }
@@ -69,6 +70,7 @@ export class NewTopDogApi {
             })
           )
         ),
+        share(),
       )
     }
   }
