@@ -22,7 +22,19 @@ export class NewTopDogContestLeaderboard {
     this.api.getDogs();
 
     this.api.dogs$.subscribe(dogs => {
+      // only grab the dogs that are from the specified contest
       this.dogs = dogs.filter((dog: any) => dog?.contest?.page === this.contest);
+
+      // sort the dogs in descending order
+      this.dogs.sort((a, b) => {
+        if(a.votes > b.votes) {
+          return -1;
+        } else if(a.votes < b.votes ) {
+          return 1;
+        }
+
+        return 0;
+      })
     })
   }
 
