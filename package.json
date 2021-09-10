@@ -1,6 +1,6 @@
 {
   "name": "oshkosh-kiwanis-new-top-dog-widgets",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
