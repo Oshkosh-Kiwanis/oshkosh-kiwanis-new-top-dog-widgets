@@ -11,6 +11,7 @@ export namespace Components {
     }
     interface NewTopDogContestGoal {
         "contest": string;
+        "mode": 'number' | 'bar';
     }
     interface NewTopDogContestLeaderboard {
         "contest": string;
@@ -58,6 +59,7 @@ declare namespace LocalJSX {
     }
     interface NewTopDogContestGoal {
         "contest"?: string;
+        "mode"?: 'number' | 'bar';
     }
     interface NewTopDogContestLeaderboard {
         "contest"?: string;
