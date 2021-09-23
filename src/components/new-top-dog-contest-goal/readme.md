@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default     |
-| --------- | --------- | ----------- | -------- | ----------- |
-| `contest` | `contest` |             | `string` | `undefined` |
+| Property  | Attribute | Description | Type                | Default     |
+| --------- | --------- | ----------- | ------------------- | ----------- |
+| `contest` | `contest` |             | `string`            | `undefined` |
+| `mode`    | `mode`    |             | `"bar" \| "number"` | `'bar'`     |
 
 
 ----------------------------------------------

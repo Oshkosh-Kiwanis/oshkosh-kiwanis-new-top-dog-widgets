@@ -45,8 +45,7 @@ export class NewTopDogContestGoal {
         this.contestGoal = found[0];
 
         this.raised = this.contestGoal.raised;
-        // this.champ_day = this.contestGoal.champ_day || 0;
-        this.champ_day = 5000;
+        this.champ_day = this.contestGoal.champ_day || 0;
         const total = this.raised + this.champ_day || 0 ;
         const max = Math.max(total, this.contestGoal.goal);
 
