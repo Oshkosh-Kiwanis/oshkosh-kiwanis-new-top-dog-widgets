@@ -10,6 +10,7 @@ export class NewTopDogContestGoal {
   * The contest to show the top dogs from
   */
   @Prop() contest: string;
+  @Prop() mode: 'number' | 'bar' = 'bar';
 
   @State() contestGoal: any;
 
@@ -59,19 +60,32 @@ export class NewTopDogContestGoal {
         return null;
     }
 
-    return <div class="new-top-dog-contest-goal">
-        <div class="goals-text">
-            <div class="raised">
-                <div class="votes">{ this.format(this.raised) }</div>
-                { !!this.contestGoal.champ_day ? <div class="champ-day">&nbsp;+&nbsp;{ this.format(this.champ_day) }</div> : null }
-            </div>
-            <div class="goal">{ this.format(this.contestGoal.goal) }</div>
-        </div>
-        <div class="goals-bar">
-            <div class="goals-bar-raised-votes" style={{ width: `${this.votesBarWidth}%` }}></div>
-            <div class="goals-bar-raised-champ-day" style={{ width: `${this.champDayBarWidth}%` }}></div>
-        </div>
-    </div>;
+    if(this.mode === 'number') {
+      return <div class="new-top-dog-contest-goal">
+          <div class="goals-numbers">
+              <div class="raised">
+                  <span class="votes">{ this.format(this.raised) }</span>
+                  { !!this.champ_day ? <span class="champ-day">&nbsp;+&nbsp;{ this.format(this.champ_day) }</span> : null }
+              </div>
+          </div>
+      </div>;
+    }
+
+    if(this.mode === 'bar') { 
+      return <div class="new-top-dog-contest-goal">
+          <div class="goals-text">
+              <div class="raised">
+                  <div class="votes">{ this.format(this.raised) }</div>
+                  { !!this.champ_day ? <div class="champ-day">&nbsp;+&nbsp;{ this.format(this.champ_day) }</div> : null }
+              </div>
+              <div class="goal">{ this.format(this.contestGoal.goal) }</div>
+          </div>
+          <div class="goals-bar">
+              <div class="goals-bar-raised-votes" style={{ width: `${this.votesBarWidth}%` }}></div>
+              <div class="goals-bar-raised-champ-day" style={{ width: `${this.champDayBarWidth}%` }}></div>
+          </div>
+      </div>;
+    }
   }
 
   disconnectedCallback() {
