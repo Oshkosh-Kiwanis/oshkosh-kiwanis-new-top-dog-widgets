@@ -30,6 +30,12 @@
     & > a {
       width: 100%;
       aspect-ratio: 450/525;
+
+      // doesn't support aspect ratio
+      @supports not (aspect-ratio: auto) {
+        padding-bottom: calc(100% * (525 / 450));
+      }
+
       display: block;
     }
 
