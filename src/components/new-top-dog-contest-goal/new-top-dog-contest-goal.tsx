@@ -64,8 +64,7 @@ export class NewTopDogContestGoal {
       return <div class="new-top-dog-contest-goal">
           <div class="goals-numbers">
               <div class="raised">
-                  <span class="votes">{ this.format(this.raised) }</span>
-                  { !!this.champ_day ? <span class="champ-day">&nbsp;+&nbsp;{ this.format(this.champ_day) }</span> : null }
+                  <span class="votes">{ this.format(this.raised + this.champ_day) }</span>
               </div>
           </div>
       </div>;
