@@ -16,6 +16,8 @@ export namespace Components {
     interface NewTopDogContestLeaderboard {
         "contest": string;
     }
+    interface NewTopDogGlobalLeaderboard {
+    }
     interface NewTopDogOverallGoal {
         "contest": string;
         "mode": 'raised' | 'bar';
@@ -40,6 +42,12 @@ declare global {
         prototype: HTMLNewTopDogContestLeaderboardElement;
         new (): HTMLNewTopDogContestLeaderboardElement;
     };
+    interface HTMLNewTopDogGlobalLeaderboardElement extends Components.NewTopDogGlobalLeaderboard, HTMLStencilElement {
+    }
+    var HTMLNewTopDogGlobalLeaderboardElement: {
+        prototype: HTMLNewTopDogGlobalLeaderboardElement;
+        new (): HTMLNewTopDogGlobalLeaderboardElement;
+    };
     interface HTMLNewTopDogOverallGoalElement extends Components.NewTopDogOverallGoal, HTMLStencilElement {
     }
     var HTMLNewTopDogOverallGoalElement: {
@@ -50,6 +58,7 @@ declare global {
         "new-top-dog-contest-entries": HTMLNewTopDogContestEntriesElement;
         "new-top-dog-contest-goal": HTMLNewTopDogContestGoalElement;
         "new-top-dog-contest-leaderboard": HTMLNewTopDogContestLeaderboardElement;
+        "new-top-dog-global-leaderboard": HTMLNewTopDogGlobalLeaderboardElement;
         "new-top-dog-overall-goal": HTMLNewTopDogOverallGoalElement;
     }
 }
@@ -64,6 +73,8 @@ declare namespace LocalJSX {
     interface NewTopDogContestLeaderboard {
         "contest"?: string;
     }
+    interface NewTopDogGlobalLeaderboard {
+    }
     interface NewTopDogOverallGoal {
         "contest"?: string;
         "mode"?: 'raised' | 'bar';
@@ -72,6 +83,7 @@ declare namespace LocalJSX {
         "new-top-dog-contest-entries": NewTopDogContestEntries;
         "new-top-dog-contest-goal": NewTopDogContestGoal;
         "new-top-dog-contest-leaderboard": NewTopDogContestLeaderboard;
+        "new-top-dog-global-leaderboard": NewTopDogGlobalLeaderboard;
         "new-top-dog-overall-goal": NewTopDogOverallGoal;
     }
 }
@@ -82,6 +94,7 @@ declare module "@stencil/core" {
             "new-top-dog-contest-entries": LocalJSX.NewTopDogContestEntries & JSXBase.HTMLAttributes<HTMLNewTopDogContestEntriesElement>;
             "new-top-dog-contest-goal": LocalJSX.NewTopDogContestGoal & JSXBase.HTMLAttributes<HTMLNewTopDogContestGoalElement>;
             "new-top-dog-contest-leaderboard": LocalJSX.NewTopDogContestLeaderboard & JSXBase.HTMLAttributes<HTMLNewTopDogContestLeaderboardElement>;
+            "new-top-dog-global-leaderboard": LocalJSX.NewTopDogGlobalLeaderboard & JSXBase.HTMLAttributes<HTMLNewTopDogGlobalLeaderboardElement>;
             "new-top-dog-overall-goal": LocalJSX.NewTopDogOverallGoal & JSXBase.HTMLAttributes<HTMLNewTopDogOverallGoalElement>;
         }
     }

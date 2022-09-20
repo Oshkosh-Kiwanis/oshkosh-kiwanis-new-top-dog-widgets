@@ -9,6 +9,7 @@ export class NewTopDogApi {
 
   goals$: Observable<any> = null;
   dogs$: Observable<any> = null;
+  globalLeaderboard$: Observable<any> = null;
 
   destroy$ = new Subject<boolean>();
 
@@ -21,6 +22,32 @@ export class NewTopDogApi {
     NewTopDogApi.num_instances += 1;
 
     return NewTopDogApi.instance;
+  }
+
+  public getGlobalLeaderboard() {
+    if(!this.globalLeaderboard$) {
+      this.globalLeaderboard$ = timer(0, 60 * 1000).pipe(
+        concatMapTo(
+          fromFetch("https://new-top-dog-gateway-cwp94ia4.uc.gateway.dev/v1/global/leaderboard").pipe(
+            switchMap(response => {
+              if (response.ok) {
+                // OK return data
+                return response.json();
+              } else {
+                // Server is returning a status requiring the client to try something else.
+                return of({ error: true, message: `Error ${response.status}` });
+              }
+            }),
+            catchError(err => {
+              // Network or other error, handle appropriately
+              console.error(err);
+              return of({ error: true, message: err.message })
+            })
+          )
+        ),
+        share(),
+      )
+    }
   }
 
   public getDogs() {

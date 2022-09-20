@@ -1,0 +1,70 @@
+.new-top-dog-global-leaderboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .dog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    --num-dogs: 1;
+    --action-spacing: 10px;
+    font-size: 25px;
+
+    // tablet
+    @media screen and (min-width: 768px) {
+      --num-dogs: 3;
+      font-size: 22px;
+    }
+
+    // laptop
+    @media screen and (min-width: 1024px) {
+      --num-dogs: 5;
+      font-size: unquote('max(15px, 1vw)');
+    }
+
+    margin: 2px;
+    width: calc(100% / var(--num-dogs) - (2px * var(--num-dogs)));
+
+    & > a {
+      width: 100%;
+      aspect-ratio: 450/525;
+
+      // doesn't support aspect ratio
+      @supports not (aspect-ratio: auto) {
+        padding-bottom: calc(100% * (525 / 450));
+      }
+
+      display: block;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      flex-grow: 1;
+      flex-shrink: 0;
+
+      text-align: center;
+      line-break: normal;
+
+      * {
+        max-width: 100%;
+        margin: 5px;
+      }
+    }
+
+    .actions {
+      margin-top: var(--action-spacing);
+      margin-bottom: calc(var(--action-spacing) * 2);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+}
